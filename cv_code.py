@@ -16,8 +16,12 @@ def print_cv_version():
 
 
 def blur_image(img_name):
+    # read image
     img = cv2.imread('./uploads/src/' + img_name)
+    # convert image to gray
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # do blur effect
     kernel = np.ones((5, 5), np.float32) / 25
     dst = cv2.filter2D(img_gray, -1, kernel)
+    # save image
     cv2.imwrite('./uploads/dst/' + img_name, dst)

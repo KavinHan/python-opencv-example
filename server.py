@@ -8,12 +8,18 @@ from werkzeug.utils import secure_filename
 import uuid
 from cv_code import blur_image
 
+# uploaded file extension allowed filtering set
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+# uploaded file saving path
+# uploads/src: original image
+# uploads/dst: after image processing image
 UPLOAD_FOLDER = './uploads'
 
+# flask setting
 app = Flask(__name__, template_folder='template')
 app.secret_key = "secret key"
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+# maximum file size
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
 
 # static directory path
@@ -21,11 +27,13 @@ static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'sta
 uploads_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'uploads')
 
 
+# route: API/
 @app.route('/', methods=['GET'])
 def serve_dir_directory_index():
     return send_from_directory(static_file_dir, 'index.html')
 
 
+# route: API/*
 @app.route('/<path:path>', methods=['GET'])
 def serve_file_in_dir(path):
     if not os.path.isfile(os.path.join(static_file_dir, path)):
@@ -34,6 +42,7 @@ def serve_file_in_dir(path):
     return send_from_directory(static_file_dir, path)
 
 
+# route: API/uploads/*
 @app.route('/uploads/<path:path>', methods=['GET'])
 def serve_file_in_upload(path):
     return send_from_directory(uploads_file_dir, path)
