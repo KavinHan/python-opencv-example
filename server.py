@@ -62,6 +62,8 @@ def get_extension(filename):
 @app.route('/api/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
+        print(request.host.split(':')[0])
+        request_ip = request.host.split(':')[0]
         # check if the post request has the file part
         if 'file' not in request.files:
             dst = {
@@ -78,7 +80,7 @@ def upload_file():
             dst = {
                 'msg': 'upload file success',
                 'code': 200,
-                'result_url': 'http://192.168.1.112:5000/uploads/dst/' + filename
+                'result_url': 'http://'+request_ip+':5000/uploads/dst/' + filename
             }
             return jsonify(dst)
         else:
