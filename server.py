@@ -8,6 +8,9 @@ from werkzeug.utils import secure_filename
 import uuid
 from cv_code import blur_image
 
+# set host address
+HOST = '0.0.0.0'
+
 # uploaded file extension allowed filtering set
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 # uploaded file saving path
@@ -75,7 +78,7 @@ def upload_file():
             dst = {
                 'msg': 'upload file success',
                 'code': 200,
-                'result_url': 'http://127.0.0.1:5000/uploads/dst/' + filename
+                'result_url': 'http://192.168.1.112:5000/uploads/dst/' + filename
             }
             return jsonify(dst)
         else:
@@ -87,4 +90,5 @@ def upload_file():
 
 
 if __name__ == "__main__":
-    app.run()
+    # run for any ip address
+    app.run(host=HOST, port=5000)
