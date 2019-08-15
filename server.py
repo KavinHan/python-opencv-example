@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 import uuid
 from cv_code import blur_image
 
-# set host address
+# set host address, allow all ip address
 HOST = '0.0.0.0'
 
 # uploaded file extension allowed filtering set
@@ -51,14 +51,17 @@ def serve_file_in_upload(path):
     return send_from_directory(uploads_file_dir, path)
 
 
+# filtering file extension
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+# get file extension
 def get_extension(filename):
     return filename.rsplit('.', 1)[1].lower()
 
 
+# route: API/api/upload
 @app.route('/api/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
@@ -71,12 +74,20 @@ def upload_file():
                 'code': 10040
             }
             return jsonify(dst)
+        # get file param
         file = request.files['file']
+        # generate uuid string for saving filename
         uuid_str = str(uuid.uuid4())
+        # create full filename with file extension
         filename = uuid_str + '.' + str(get_extension(file.filename))
+        # check the file extension is allow or deny
         if file and allowed_file(file.filename):
+            # save original file to uploads/src folder
             file.save(os.path.join(app.config['UPLOAD_FOLDER'] + '/src', filename))
+            # blur the image file by opencv code
+            # will saving to uploads/dst folder
             blur_image(filename)
+            # return result image file url
             dst = {
                 'msg': 'upload file success',
                 'code': 200,
@@ -84,6 +95,7 @@ def upload_file():
             }
             return jsonify(dst)
         else:
+            # return error message
             dst = {
                 'msg': 'file type not allowed',
                 'code': 10050
