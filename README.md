@@ -22,6 +22,7 @@ $> pip install flask
 $> pip install opencv-python
 # run server
 $> python server.py
+```
 
 ### install pycharm for develop python project
 [download link](https://www.jetbrains.com/pycharm/download/#section=linux)
