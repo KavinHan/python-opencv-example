@@ -39,7 +39,16 @@ $> source venv/bin/active
 # install pymysql 
 $> pip install PyMySQL
 
+```
 
+**image table**
+```
+CREATE TABLE `image` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `original_url` varchar(255) NOT NULL DEFAULT '' COMMENT 'original image url',
+  `result_url` varchar(255) NOT NULL DEFAULT '' COMMENT 'result image url',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 ```
 
 #### Reference
