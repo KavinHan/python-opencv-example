@@ -32,7 +32,18 @@ $> python server.py
 3. run `charm .` open project by pycharm
 
 
+### using mysql
+```bash
+# active virtual environment first
+$> source venv/bin/active
+# install pymysql 
+$> pip install PyMySQL
+
+
+```
+
 #### Reference
 - https://flask.palletsprojects.com/en/1.1.x/patterns/fileuploads/
 - https://www.roytuts.com/python-flask-file-upload-example/
 - https://www.techcoil.com/blog/serve-static-files-python-3-flask/
+- https://pymysql.readthedocs.io/en/latest/user/installation.html
